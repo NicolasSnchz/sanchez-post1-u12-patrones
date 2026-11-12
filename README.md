@@ -9,6 +9,8 @@ Sistema para que el área de Finanzas reemplace su hoja de cálculo de reembolso
 1. [Diseño Propuesto](#diseño-propuesto)
 2. [Arquitectura resultante](#arquitectura-resultante)
 3. [Decisiones de diseño](#decisiones-de-diseño)
+4. [ADR-001: capas simples o Hexagonal](#adr-001-capas-simples-o-hexagonal)
+5. [Qué se descartó y por qué](#qué-se-descartó-y-por-qué)
 8. [Inconsistencias del enunciado y cómo las resolví](#inconsistencias-del-enunciado-y-cómo-las-resolví)
 9. [Estructura, ejecución y herramientas](#estructura-ejecución-y-herramientas)
 
@@ -86,7 +88,7 @@ Las flechas son dependencias de código y todas bajan:
 - **El empleado solo ve el primer motivo.** Si le faltan los documentos *y* además ya tiene una solicitud pendiente del mismo período, primero corrige los documentos, vuelve a enviar y solo entonces se entera del duplicado. Con duplicados de primero, sabría de entrada que reenviar no sirve de nada mientras siga la pendiente.
 - **El ahorro es menor de lo que parece.** La operación realmente cara es la consulta a la base de datos que trae los pendientes, y esa la hace el servicio [antes de llamar a la cadena](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/src/main/java/com/empresa/reembolsos/aplicacion/SolicitudReembolsoService.java#L29), sea cual sea el orden. El orden solo ahorra el recorrido en memoria.
 
-El orden queda fijado por las pruebas de [`CadenaValidadoresTest`](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/src/test/java/com/empresa/reembolsos/procesamiento/validacion/CadenaValidadoresTest.java): con una solicitud que falla en las tres etapas, el motivo debe ser el de documentos.
+Hacer perezosa esa consulta lo dejé como alternativa descartada ([ver abajo](#qué-se-descartó-y-por-qué)). El orden queda fijado por las pruebas de [`CadenaValidadoresTest`](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/src/test/java/com/empresa/reembolsos/procesamiento/validacion/CadenaValidadoresTest.java): con una solicitud que falla en las tres etapas, el motivo debe ser el de documentos.
 
 ### Decisión de diseño 2: un mapa de estrategias inyectado por Spring, no un switch
 
@@ -101,6 +103,43 @@ El orden queda fijado por las pruebas de [`CadenaValidadoresTest`](https://githu
 
 Solo el mapa cumple el RF2 tal como está escrito: ninguna línea de las calculadoras existentes ni del selector se toca. Siendo honesto, "sin tocar una sola línea ya escrita" no es literal en ninguna de las dos opciones: la categoría nueva tiene que existir en el `enum` y tener su tope. Esos dos olvidos no pasan en silencio. [`obtener_todaCategoriaTieneSuCalculadora`](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/src/test/java/com/empresa/reembolsos/procesamiento/calculo/SelectorCalculadoraTest.java#L19) y [`validar_todaCategoriaTieneUnTopeConfigurado`](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/src/test/java/com/empresa/reembolsos/procesamiento/validacion/ValidadorMontoMaximoTest.java#L51) recorren todos los valores del `enum` y fallan si a alguno le falta su calculadora o su tope. Y si dos calculadoras dijeran atender la misma categoría, `Collectors.toMap` lanzaría una excepción al arrancar, en vez de elegir una al azar.
 
+### Decisión de diseño 3: capas simples para la persistencia (ADR-001)
+
+Está documentada completa en el [ADR-001](#adr-001-capas-simples-o-hexagonal).
+
+### Decisión de diseño 4: la Regla 1 prohíbe acceso a datos y web, no todo Spring
+
+La [Regla 1](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/src/test/java/com/empresa/reembolsos/ReglasArquitectura.java#L19) prohíbe que `procesamiento` dependa de `infraestructura`, `adaptadores`, `org.springframework.data..` y `jakarta.persistence..`, pero deja pasar `@Component`. La distinción es a propósito:
+
+- **`@Component` es solo metadato de ensamblaje.** Le dice a Spring "crea uno de estos", pero no le da a la clase ningún comportamiento ni la ata a una tecnología. Si mañana se quitara Spring, habría que borrar una anotación por clase y la lógica quedaría intacta. La prueba de eso es que todas las pruebas unitarias de `procesamiento` crean sus objetos con `new`, sin levantar ningún contexto.
+- **Una clase de Spring Data o de JPA sí ata la regla de negocio a la persistencia.** Con un repositorio o un `EntityManager` adentro, el validador ya no se puede probar sin una base de datos, y la frontera que el [ADR-001](docs/adr/ADR-001.md) deja en el servicio desaparece. Es exactamente la violación que se simula en el Paso 5.
+- **Las clases de la capa web** (`ResponseEntity`, `HttpStatus`) meterían el protocolo de transporte dentro de las reglas de negocio.
+
+Prohibir todo `org.springframework..` obligaría a quitar `@Component` de las once clases de `procesamiento` y a registrarlas a mano en una clase `@Configuration`. Sería más código y una cosa más que mantener sincronizada, sin ganar ninguna independencia real (KISS). 
+## ADR-001: capas simples o Hexagonal
+
+Resumen del [ADR-001](docs/adr/ADR-001.md), fechado el 12 de noviembre de 2026. Respondí el criterio de la guía (Hexagonal vale la pena en sistemas que viven tres años o más *con cambios de infraestructura*) por separado para cada dependencia:
+
+| | Persistencia | Notificación |
+|---|---|---|
+| Lo que hay hoy | Un repositorio, una consulta derivada y dos operaciones heredadas, usados por un solo servicio | El servicio ya depende solo de `ObservadorCambioEstado` |
+| ¿Cambio de infraestructura conocido? | No: no hay plan de cambiar de motor | Sí: la API de Contabilidad, el próximo trimestre |
+| Decisión | **Capas simples.** Un puerto hoy copiaría los tres métodos de Spring Data (YAGNI) | **Ningún cambio.** La interfaz ya es el puerto. La implementación que llame a la API irá en `infraestructura`, porque la Regla 1 no la deja vivir en `procesamiento` |
+
+La consecuencia negativa que acepto: si algún día cambia el motor de base de datos, habrá que introducir el puerto de persistencia después y tocar el servicio. El ADR también deja anotado lo que falta decidir cuando llegue la API: qué pasa si la llamada falla después de guardar el cambio de estado.
+
+## Qué se descartó y por qué
+
+Cada descarte es la decisión vigente hoy, no una definitiva, y por eso incluye la señal que me haría reconsiderarla. Los anclo en los principios de la guía: **YAGNI**, **KISS**, la **Rule of Three** y el **test de explicabilidad**.
+
+| Qué consideré | Por qué lo descarté | Señal que me haría reconsiderarlo |
+|---|---|---|
+| **`ApplicationEventPublisher` y `@EventListener` en vez de la lista de observadores** (ejemplo de la guía) | Con tres observadores fijos y conocidos al compilar, un bus de eventos genérico no desacopla más de lo que ya desacopla `ObservadorCambioEstado`, y sí hace más difícil seguir en el código quién reacciona a qué. | Que un observador tenga que reaccionar *después de confirmar la transacción* o en otro hilo (`@TransactionalEventListener`, `@Async`), por ejemplo la API de Contabilidad. |
+| **Visitor o Abstract Factory para exportar reportes en varios formatos** (ejemplo de la guía) | Hoy solo existe la exportación en CSV. No hay un segundo formato pedido de verdad, así que no se cumple la Rule of Three. | Que Contabilidad pida de verdad un segundo formato. Con el tercero, la abstracción se justifica. |
+| **Patrón State para las transiciones de estado** (propio) | Lo pensé al escribir [`cambiarEstado`](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/src/main/java/com/empresa/reembolsos/aplicacion/SolicitudReembolsoService.java#L40). La especificación no define ninguna regla de transición (no dice, por ejemplo, que una RECHAZADA no pueda pasar a APROBADA), y ningún estado cambia lo que la solicitud puede hacer. State tendría cuatro clases sin ningún comportamiento distinto que encapsular. El único caso real lo cubre una [cláusula de guarda](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/src/main/java/com/empresa/reembolsos/aplicacion/SolicitudReembolsoService.java#L44): repetir el mismo estado no vuelve a notificar, porque repetir APROBADA programaría un segundo pago. **Test de explicabilidad:** no encontré una oración para justificar State que no empezara con "por si acaso". | Que Finanzas defina transiciones prohibidas o acciones propias de cada estado, por ejemplo que REQUIERE_CORRECCION reabra la edición de la solicitud. |
+| **Cargar los pendientes de forma perezosa (`Supplier<List<...>>`)** (propio) | Surgió en la Decisión 1: así la consulta a la base de datos solo correría si la solicitud llega al último eslabón. Pero cambiaría la firma de los tres validadores y de la cadena para ahorrar una consulta indexada por empleado que trae unas pocas filas. **YAGNI**: es optimizar algo que nadie ha medido como lento. | Que la consulta aparezca como lenta en una medición real, o que un validador nuevo (el límite anual acumulado) necesite datos todavía más caros de cargar. |
+| **Hacer configurable el orden de la cadena** (propio) | Pensé en armar la cadena desde una propiedad (`validacion.orden=documentos,monto,duplicados`) en vez de fijarla en el constructor de `CadenaValidadores`. Hoy hay una sola cadena, el orden cambia solo con una revisión de código y las pruebas lo fijan. **KISS**: tres líneas legibles valen más que un mecanismo de configuración que hay que validar. | Que existan dos flujos con órdenes distintos (por ejemplo, una validación más laxa para solicitudes pequeñas). |
+
 ## Inconsistencias del enunciado y cómo las resolví
 
 | Qué dice el enunciado | El problema | Cómo lo resolví |
@@ -111,6 +150,11 @@ Solo el mapa cumple el RF2 tal como está escrito: ninguna línea de las calcula
 | El servicio lanza `SolicitudInvalidaException` | La guía no la define y el controlador no la traduce, así que el checkpoint de "rechaza con un mensaje claro" respondería un error 500 | La creé en `aplicacion`, junto con `SolicitudNoEncontradaException`, y [`ManejadorErrores`](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/src/main/java/com/empresa/reembolsos/adaptadores/rest/ManejadorErrores.java) las traduce a 400 y 404 con el motivo en el campo `detail` |
 | `cambiarEstado` guarda y notifica siempre | Si se envía dos veces APROBADA, Contabilidad programa dos pagos. El RF3 habla de cuando el estado *cambia* | Si el estado no cambia, no se guarda ni se notifica |
 | `crear` guarda la solicitud tal como llega por JSON | Si el cliente envía un `id`, `save` sobrescribe otra solicitud existente | `crear` descarta el `id` recibido |
+| La Regla 3 exige que toda clase de `procesamiento.calculo` que no sea interfaz implemente `CalculadoraReembolso` | `SelectorCalculadora`, de la propia guía, vive en ese paquete y no la implementa, así que la regla falla con el código del enunciado | La regla aplica a las clases que se llaman `Calculadora*`, que son las estrategias ([regla](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/src/test/java/com/empresa/reembolsos/ReglasArquitectura.java#L38)) |
+| `@AnalyzeClasses(packages = "com.empresa.reembolsos")` | Importa también las clases de prueba. `CalculadoraViajeTest`, que vive en `procesamiento.calculo`, no implementa `CalculadoraReembolso` y rompe la Regla 3 (lo mismo pasa con la 4) | `importOptions = ImportOption.DoNotIncludeTests.class`: las reglas miran el código de producción |
+| `mvn test -Dtest=ReglasArquitectura` y luego `mvn verify` | El nombre `ReglasArquitectura` no coincide con los patrones que Surefire ejecuta por defecto (`*Test`, `*Tests`, `Test*`, `*TestCase`), así que `mvn verify` nunca corría las 4 reglas | Agregué `ReglasArquitectura` a los `includes` de Surefire en el [`pom.xml`](https://github.com/NicolasSnchz/sanchez-post1-u12-patrones/blob/main/pom.xml#L67): las reglas corren solas con `-Dtest` y también dentro de la suite completa |
+| ArchUnit 1.2.1 | Los prerrequisitos piden "ArchUnit 1.x" y el Paso 2 fija la 1.2.1 | Uso la 1.3.0, que ya había probado con JDK 17 y 23 en la unidad 11.  |
+| El workflow usa `actions/checkout@v4`, `actions/setup-java@v4`, `actions/cache@v3` y `ubuntu-latest` | Son versiones que GitHub ya marca con advertencias de obsolescencia | `checkout@v5`, `setup-java@v5` con `cache: maven` (reemplaza a `actions/cache`) y `ubuntu-24.04` |
 | El primer commit hace `git add pom.xml src/main/java/.../dominio/ README.md` | Deja fuera `ReembolsosApplication`, `application.properties`, el `.gitignore` y la prueba que genera Spring Initializr, que el checkpoint necesita para `mvn clean package` | Los incluí en el primer commit |
 | "No marcar Add a README ni agregar .gitignore (el proyecto de Spring Initializr ya incluye ambos)" | Spring Initializr genera el `.gitignore` y un `HELP.md`, pero no un README | Escribí este README desde el primer commit, que es donde la guía pide el Diseño Propuesto |
 | El repositorio se llama `apellido-post1-u12` | | Lo llamé `sanchez-post1-u12-patrones`, como mis entregas anteriores |
@@ -128,10 +172,14 @@ src/main/java/com/empresa/reembolsos/
 ├── infraestructura/    RepositorioSolicitudesJpa
 └── adaptadores/rest/   SolicitudReembolsoController, ManejadorErrores
 src/main/resources/META-INF/orm.xml      mapeo JPA del dominio
+src/test/java/com/empresa/reembolsos/ReglasArquitectura.java
+docs/adr/ADR-001.md
+.github/workflows/arquitectura.yml
 ```
 
 ```bash
 mvn clean package                         # compila y corre toda la suite
+mvn test -Dtest=ReglasArquitectura        # solo las 4 reglas de arquitectura
 mvn spring-boot:run                       # API en http://localhost:8080
 ```
 
@@ -141,5 +189,5 @@ curl -X POST localhost:8080/api/solicitudes -H "Content-Type: application/json" 
 curl -X PUT localhost:8080/api/solicitudes/1/estado -H "Content-Type: application/json" -d '"APROBADA"'
 ```
 
-**Herramientas:** Java 17 (probado también con JDK 23), Spring Boot 3.5.15 (Spring Web, Spring Data JPA y H2), JUnit 5, Mockito, JaCoCo, Git y GitHub.
+**Herramientas:** Java 17 (probado también con JDK 23), Spring Boot 3.5.15 (Spring Web, Spring Data JPA y H2), JUnit 5, Mockito, ArchUnit 1.3.0, JaCoCo, GitHub Actions, Git y GitHub.
 
