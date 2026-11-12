@@ -1,0 +1,40 @@
+commit 33e78828b7a4b369be928285f68361a5213c07ab
+Author: Nicolas Sanchez <nicosanchezvil@gmail.com>
+Date:   Thu Nov 12 11:10:13 2026 -0500
+
+    test: violacion de arquitectura intencional
+
+diff --git a/src/main/java/com/empresa/reembolsos/procesamiento/validacion/ValidadorDuplicados.java b/src/main/java/com/empresa/reembolsos/procesamiento/validacion/ValidadorDuplicados.java
+index 4fa0fdc..e8fe0a1 100644
+--- a/src/main/java/com/empresa/reembolsos/procesamiento/validacion/ValidadorDuplicados.java
++++ b/src/main/java/com/empresa/reembolsos/procesamiento/validacion/ValidadorDuplicados.java
+@@ -1,6 +1,9 @@
+ package com.empresa.reembolsos.procesamiento.validacion;
+ 
++import com.empresa.reembolsos.dominio.EstadoSolicitud;
+ import com.empresa.reembolsos.dominio.SolicitudReembolso;
++import com.empresa.reembolsos.infraestructura.RepositorioSolicitudesJpa;
++import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Component;
+ 
+ import java.time.YearMonth;
+@@ -8,10 +11,18 @@ import java.util.List;
+ 
+ @Component
+ public class ValidadorDuplicados extends ValidadorSolicitud {
++
++    // Violacion intencional de la Regla 1: el validador consulta la base de datos por su cuenta
++    @Autowired(required = false)
++    private RepositorioSolicitudesJpa repositorio;
++
+     @Override
+     protected ResultadoValidacion validarPropio(SolicitudReembolso solicitud, List<SolicitudReembolso> pendientes) {
++        var aRevisar = repositorio != null
++            ? repositorio.findByEmpleadoIdAndEstado(solicitud.getEmpleadoId(), EstadoSolicitud.PENDIENTE)
++            : pendientes;
+         var periodo = YearMonth.from(solicitud.getFechaGasto());
+-        boolean existeDuplicado = pendientes.stream()
++        boolean existeDuplicado = aRevisar.stream()
+             .anyMatch(p -> p.getCategoria() == solicitud.getCategoria()
+                         && YearMonth.from(p.getFechaGasto()).equals(periodo));
+         return existeDuplicado

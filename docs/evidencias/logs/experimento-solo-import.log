@@ -1,0 +1,79 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24463 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] ------------------< com.empresa:reembolsos-integrado >------------------
+[INFO] Building reembolsos-integrado 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] 
+[INFO] --- jacoco:0.8.13:prepare-agent (preparar-agente) @ reembolsos-integrado ---
+[INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.13/org.jacoco.agent-0.8.13-runtime.jar=destfile=/tmp/tmp.BAQguhiTPg/exp-import/target/jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ reembolsos-integrado ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ reembolsos-integrado ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 25 source files with javac [debug parameters release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ reembolsos-integrado ---
+[INFO] skip non existing resourceDirectory /tmp/tmp.BAQguhiTPg/exp-import/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ reembolsos-integrado ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 17 source files with javac [debug parameters release 17] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ reembolsos-integrado ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.empresa.reembolsos.ReglasArquitectura
+16:27:25.293 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.21
+[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 2.069 s <<< FAILURE! -- in com.empresa.reembolsos.ReglasArquitectura
+[ERROR] com.empresa.reembolsos.ReglasArquitectura.controladorSoloUsaServicio -- Time elapsed: 0.015 s <<< FAILURE!
+java.lang.AssertionError: 
+Architecture Violation [Priority: MEDIUM] - Rule 'classes that reside in a package '..adaptadores.rest..' should only access classes that reside in any package ['..aplicacion..', '..dominio..', 'org.springframework.web..', 'org.springframework.http..', 'java..']' was violated (3 times):
+Constructor <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.<init>(com.empresa.reembolsos.aplicacion.SolicitudReembolsoService)> sets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:20)
+Method <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.cambiarEstado(java.lang.Long, com.empresa.reembolsos.dominio.EstadoSolicitud)> gets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:29)
+Method <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.crear(com.empresa.reembolsos.dominio.SolicitudReembolso)> gets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:24)
+	at com.tngtech.archunit.lang.ArchRule$Assertions.assertNoViolation(ArchRule.java:94)
+	at com.tngtech.archunit.lang.ArchRule$Assertions.check(ArchRule.java:86)
+	at com.tngtech.archunit.lang.ArchRule$Factory$SimpleArchRule.check(ArchRule.java:165)
+	at com.tngtech.archunit.lang.syntax.ObjectsShouldInternal.check(ObjectsShouldInternal.java:81)
+	at com.tngtech.archunit.junit.internal.ArchUnitTestDescriptor$ArchUnitRuleDescriptor.execute(ArchUnitTestDescriptor.java:167)
+	at com.tngtech.archunit.junit.internal.ArchUnitTestDescriptor$ArchUnitRuleDescriptor.execute(ArchUnitTestDescriptor.java:150)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   ReglasArquitectura.controladorSoloUsaServicio Architecture Violation [Priority: MEDIUM] - Rule 'classes that reside in a package '..adaptadores.rest..' should only access classes that reside in any package ['..aplicacion..', '..dominio..', 'org.springframework.web..', 'org.springframework.http..', 'java..']' was violated (3 times):
+Constructor <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.<init>(com.empresa.reembolsos.aplicacion.SolicitudReembolsoService)> sets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:20)
+Method <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.cambiarEstado(java.lang.Long, com.empresa.reembolsos.dominio.EstadoSolicitud)> gets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:29)
+Method <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.crear(com.empresa.reembolsos.dominio.SolicitudReembolso)> gets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:24)
+[INFO] 
+[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.359 s
+[INFO] Finished at: 2026-11-12T16:27:27Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project reembolsos-integrado: There are test failures.
+[ERROR] 
+[ERROR] See /tmp/tmp.BAQguhiTPg/exp-import/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

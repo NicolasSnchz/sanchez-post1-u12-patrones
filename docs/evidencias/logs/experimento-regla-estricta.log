@@ -1,0 +1,95 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24463 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] ------------------< com.empresa:reembolsos-integrado >------------------
+[INFO] Building reembolsos-integrado 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] 
+[INFO] --- jacoco:0.8.13:prepare-agent (preparar-agente) @ reembolsos-integrado ---
+[INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.13/org.jacoco.agent-0.8.13-runtime.jar=destfile=/tmp/tmp.BAQguhiTPg/exp-estricta/target/jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ reembolsos-integrado ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ reembolsos-integrado ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 25 source files with javac [debug parameters release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ reembolsos-integrado ---
+[INFO] skip non existing resourceDirectory /tmp/tmp.BAQguhiTPg/exp-estricta/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ reembolsos-integrado ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 18 source files with javac [debug parameters release 17] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ reembolsos-integrado ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.empresa.reembolsos.ReglaEstrictaTest
+16:27:33.993 [main] INFO com.tngtech.archunit.core.PluginLoader -- Detected Java version 17.0.21
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 2.008 s <<< FAILURE! -- in com.empresa.reembolsos.ReglaEstrictaTest
+[ERROR] com.empresa.reembolsos.ReglaEstrictaTest.procesamientoSinNadaDeSpring -- Time elapsed: 1.969 s <<< FAILURE!
+java.lang.AssertionError: 
+Architecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package '..procesamiento..' should depend on classes that reside in a package 'org.springframework..'' was violated (11 times):
+Class <com.empresa.reembolsos.procesamiento.calculo.CalculadoraCapacitacion> is annotated with <org.springframework.stereotype.Component> in (CalculadoraCapacitacion.java:0)
+Class <com.empresa.reembolsos.procesamiento.calculo.CalculadoraRepresentacion> is annotated with <org.springframework.stereotype.Component> in (CalculadoraRepresentacion.java:0)
+Class <com.empresa.reembolsos.procesamiento.calculo.CalculadoraViaje> is annotated with <org.springframework.stereotype.Component> in (CalculadoraViaje.java:0)
+Class <com.empresa.reembolsos.procesamiento.calculo.SelectorCalculadora> is annotated with <org.springframework.stereotype.Component> in (SelectorCalculadora.java:0)
+Class <com.empresa.reembolsos.procesamiento.notificacion.NotificadorAuditoria> is annotated with <org.springframework.stereotype.Component> in (NotificadorAuditoria.java:0)
+Class <com.empresa.reembolsos.procesamiento.notificacion.NotificadorContabilidad> is annotated with <org.springframework.stereotype.Component> in (NotificadorContabilidad.java:0)
+Class <com.empresa.reembolsos.procesamiento.notificacion.NotificadorEmpleado> is annotated with <org.springframework.stereotype.Component> in (NotificadorEmpleado.java:0)
+Class <com.empresa.reembolsos.procesamiento.validacion.CadenaValidadores> is annotated with <org.springframework.stereotype.Component> in (CadenaValidadores.java:0)
+Class <com.empresa.reembolsos.procesamiento.validacion.ValidadorDocumentosSoporte> is annotated with <org.springframework.stereotype.Component> in (ValidadorDocumentosSoporte.java:0)
+Class <com.empresa.reembolsos.procesamiento.validacion.ValidadorDuplicados> is annotated with <org.springframework.stereotype.Component> in (ValidadorDuplicados.java:0)
+Class <com.empresa.reembolsos.procesamiento.validacion.ValidadorMontoMaximo> is annotated with <org.springframework.stereotype.Component> in (ValidadorMontoMaximo.java:0)
+	at com.tngtech.archunit.lang.ArchRule$Assertions.assertNoViolation(ArchRule.java:94)
+	at com.tngtech.archunit.lang.ArchRule$Assertions.check(ArchRule.java:86)
+	at com.tngtech.archunit.lang.ArchRule$Factory$SimpleArchRule.check(ArchRule.java:165)
+	at com.tngtech.archunit.lang.syntax.ObjectsShouldInternal.check(ObjectsShouldInternal.java:81)
+	at com.empresa.reembolsos.ReglaEstrictaTest.procesamientoSinNadaDeSpring(ReglaEstrictaTest.java:21)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   ReglaEstrictaTest.procesamientoSinNadaDeSpring:21 Architecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package '..procesamiento..' should depend on classes that reside in a package 'org.springframework..'' was violated (11 times):
+Class <com.empresa.reembolsos.procesamiento.calculo.CalculadoraCapacitacion> is annotated with <org.springframework.stereotype.Component> in (CalculadoraCapacitacion.java:0)
+Class <com.empresa.reembolsos.procesamiento.calculo.CalculadoraRepresentacion> is annotated with <org.springframework.stereotype.Component> in (CalculadoraRepresentacion.java:0)
+Class <com.empresa.reembolsos.procesamiento.calculo.CalculadoraViaje> is annotated with <org.springframework.stereotype.Component> in (CalculadoraViaje.java:0)
+Class <com.empresa.reembolsos.procesamiento.calculo.SelectorCalculadora> is annotated with <org.springframework.stereotype.Component> in (SelectorCalculadora.java:0)
+Class <com.empresa.reembolsos.procesamiento.notificacion.NotificadorAuditoria> is annotated with <org.springframework.stereotype.Component> in (NotificadorAuditoria.java:0)
+Class <com.empresa.reembolsos.procesamiento.notificacion.NotificadorContabilidad> is annotated with <org.springframework.stereotype.Component> in (NotificadorContabilidad.java:0)
+Class <com.empresa.reembolsos.procesamiento.notificacion.NotificadorEmpleado> is annotated with <org.springframework.stereotype.Component> in (NotificadorEmpleado.java:0)
+Class <com.empresa.reembolsos.procesamiento.validacion.CadenaValidadores> is annotated with <org.springframework.stereotype.Component> in (CadenaValidadores.java:0)
+Class <com.empresa.reembolsos.procesamiento.validacion.ValidadorDocumentosSoporte> is annotated with <org.springframework.stereotype.Component> in (ValidadorDocumentosSoporte.java:0)
+Class <com.empresa.reembolsos.procesamiento.validacion.ValidadorDuplicados> is annotated with <org.springframework.stereotype.Component> in (ValidadorDuplicados.java:0)
+Class <com.empresa.reembolsos.procesamiento.validacion.ValidadorMontoMaximo> is annotated with <org.springframework.stereotype.Component> in (ValidadorMontoMaximo.java:0)
+[INFO] 
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.263 s
+[INFO] Finished at: 2026-11-12T16:27:36Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project reembolsos-integrado: There are test failures.
+[ERROR] 
+[ERROR] See /tmp/tmp.BAQguhiTPg/exp-estricta/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

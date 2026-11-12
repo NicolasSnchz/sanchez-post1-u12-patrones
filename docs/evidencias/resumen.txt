@@ -1,0 +1,16 @@
+experimento-archunit-1.2.1-jdk17 -> 1
+experimento-archunit-1.2.1-jdk23 -> 1
+experimento-regla-estricta -> 1
+experimento-reglas-guia -> 1
+experimento-sin-orm-xml -> 1
+experimento-solo-import -> 1
+p1-diseno-package -> 0
+p1-package-api -> 0
+p1-verify -> 0
+p2-reglas -> 1
+p2-revert-jdk23 -> 0
+p2-revert-reglas -> 0
+p2-revert -> 0
+p2-verify-jdk17 -> 1
+p2-verify-jdk23 -> 1
+p2-violacion -> 1

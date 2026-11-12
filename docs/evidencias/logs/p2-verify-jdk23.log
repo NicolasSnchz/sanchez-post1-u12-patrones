@@ -1,0 +1,186 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24463 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] ------------------< com.empresa:reembolsos-integrado >------------------
+[INFO] Building reembolsos-integrado 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] 
+[INFO] --- jacoco:0.8.13:prepare-agent (preparar-agente) @ reembolsos-integrado ---
+[INFO] argLine set to -javaagent:/home/runner/.m2/repository/org/jacoco/org.jacoco.agent/0.8.13/org.jacoco.agent-0.8.13-runtime.jar=destfile=/tmp/tmp.BAQguhiTPg/impacto/target/jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ reembolsos-integrado ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ reembolsos-integrado ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ reembolsos-integrado ---
+[INFO] skip non existing resourceDirectory /tmp/tmp.BAQguhiTPg/impacto/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ reembolsos-integrado ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ reembolsos-integrado ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.empresa.reembolsos.aplicacion.SolicitudReembolsoServiceTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.680 s -- in com.empresa.reembolsos.aplicacion.SolicitudReembolsoServiceTest
+[INFO] Running com.empresa.reembolsos.ReembolsosApplicationTests
+16:27:00.103 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.empresa.reembolsos.ReembolsosApplicationTests]: ReembolsosApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:27:00.257 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.empresa.reembolsos.ReembolsosApplication for test class com.empresa.reembolsos.ReembolsosApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-11-12T16:27:00.952Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.ReembolsosApplicationTests         : Starting ReembolsosApplicationTests using Java 23.0.2 with PID 3366 (started by runner in /tmp/tmp.BAQguhiTPg/impacto)
+2026-11-12T16:27:00.954Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.ReembolsosApplicationTests         : No active profile set, falling back to 1 default profile: "default"
+2026-11-12T16:27:01.914Z  INFO 3366 --- [reembolsos-integrado] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-12T16:27:01.996Z  INFO 3366 --- [reembolsos-integrado] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 67 ms. Found 1 JPA repository interface.
+2026-11-12T16:27:02.520Z  INFO 3366 --- [reembolsos-integrado] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-12T16:27:02.944Z  INFO 3366 --- [reembolsos-integrado] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:reembolsos user=SA
+2026-11-12T16:27:02.947Z  INFO 3366 --- [reembolsos-integrado] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-12T16:27:03.010Z  INFO 3366 --- [reembolsos-integrado] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-12T16:27:03.083Z  INFO 3366 --- [reembolsos-integrado] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-11-12T16:27:03.127Z  INFO 3366 --- [reembolsos-integrado] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-12T16:27:03.972Z  INFO 3366 --- [reembolsos-integrado] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-12T16:27:04.107Z  INFO 3366 --- [reembolsos-integrado] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-12T16:27:05.055Z  INFO 3366 --- [reembolsos-integrado] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-12T16:27:05.110Z  INFO 3366 --- [reembolsos-integrado] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-12T16:27:06.137Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.ReembolsosApplicationTests         : Started ReembolsosApplicationTests in 5.617 seconds (process running for 9.356)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.225 s -- in com.empresa.reembolsos.ReembolsosApplicationTests
+[INFO] Running com.empresa.reembolsos.SolicitudesIntegracionTest
+2026-11-12T16:27:06.206Z  INFO 3366 --- [reembolsos-integrado] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.empresa.reembolsos.ReembolsosApplication for test class com.empresa.reembolsos.SolicitudesIntegracionTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-11-12T16:27:06.253Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.SolicitudesIntegracionTest         : Starting SolicitudesIntegracionTest using Java 23.0.2 with PID 3366 (started by runner in /tmp/tmp.BAQguhiTPg/impacto)
+2026-11-12T16:27:06.253Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.SolicitudesIntegracionTest         : No active profile set, falling back to 1 default profile: "default"
+2026-11-12T16:27:06.436Z  INFO 3366 --- [reembolsos-integrado] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-12T16:27:06.448Z  INFO 3366 --- [reembolsos-integrado] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 1 JPA repository interface.
+2026-11-12T16:27:06.628Z  INFO 3366 --- [reembolsos-integrado] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-11-12T16:27:06.630Z  INFO 3366 --- [reembolsos-integrado] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:reembolsos user=SA
+2026-11-12T16:27:06.630Z  INFO 3366 --- [reembolsos-integrado] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-11-12T16:27:06.631Z  INFO 3366 --- [reembolsos-integrado] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-12T16:27:06.633Z  INFO 3366 --- [reembolsos-integrado] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-12T16:27:06.699Z  INFO 3366 --- [reembolsos-integrado] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-12T16:27:06.701Z  INFO 3366 --- [reembolsos-integrado] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-12T16:27:06.734Z  INFO 3366 --- [reembolsos-integrado] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-12T16:27:06.739Z  INFO 3366 --- [reembolsos-integrado] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-12T16:27:06.907Z  INFO 3366 --- [reembolsos-integrado] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-12T16:27:06.907Z  INFO 3366 --- [reembolsos-integrado] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-12T16:27:06.909Z  INFO 3366 --- [reembolsos-integrado] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-12T16:27:06.921Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.SolicitudesIntegracionTest         : Started SolicitudesIntegracionTest in 0.704 seconds (process running for 10.14)
+2026-11-12T16:27:07.541Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.p.n.NotificadorAuditoria           : Auditoria: solicitud 1 cambio de PENDIENTE a RECHAZADA
+Notificando a E-RECHAZADA: su solicitud paso de PENDIENTE a RECHAZADA
+2026-11-12T16:27:07.743Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.p.n.NotificadorAuditoria           : Auditoria: solicitud 6 cambio de PENDIENTE a APROBADA
+Contabilidad: programar pago de 800000.00 para E-APROBADA
+Notificando a E-APROBADA: su solicitud paso de PENDIENTE a APROBADA
+2026-11-12T16:27:07.771Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.p.n.NotificadorAuditoria           : Auditoria: solicitud 7 cambio de PENDIENTE a APROBADA
+Contabilidad: programar pago de 400000.00 para E-REPETIDA
+Notificando a E-REPETIDA: su solicitud paso de PENDIENTE a APROBADA
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.592 s -- in com.empresa.reembolsos.SolicitudesIntegracionTest
+[INFO] Running com.empresa.reembolsos.procesamiento.calculo.CalculadoraCapacitacionTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.empresa.reembolsos.procesamiento.calculo.CalculadoraCapacitacionTest
+[INFO] Running com.empresa.reembolsos.procesamiento.calculo.CalculadoraRepresentacionTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.empresa.reembolsos.procesamiento.calculo.CalculadoraRepresentacionTest
+[INFO] Running com.empresa.reembolsos.procesamiento.calculo.CalculadoraViajeTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in com.empresa.reembolsos.procesamiento.calculo.CalculadoraViajeTest
+[INFO] Running com.empresa.reembolsos.procesamiento.calculo.SelectorCalculadoraTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.empresa.reembolsos.procesamiento.calculo.SelectorCalculadoraTest
+[INFO] Running com.empresa.reembolsos.procesamiento.notificacion.NotificadorContabilidadTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in com.empresa.reembolsos.procesamiento.notificacion.NotificadorContabilidadTest
+[INFO] Running com.empresa.reembolsos.procesamiento.notificacion.NotificadorAuditoriaTest
+2026-11-12T16:27:07.878Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.p.n.NotificadorAuditoria           : Auditoria: solicitud 7 cambio de PENDIENTE a PENDIENTE
+2026-11-12T16:27:07.884Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.p.n.NotificadorAuditoria           : Auditoria: solicitud 7 cambio de PENDIENTE a APROBADA
+2026-11-12T16:27:07.888Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.p.n.NotificadorAuditoria           : Auditoria: solicitud 7 cambio de PENDIENTE a RECHAZADA
+2026-11-12T16:27:07.890Z  INFO 3366 --- [reembolsos-integrado] [           main] c.e.r.p.n.NotificadorAuditoria           : Auditoria: solicitud 7 cambio de PENDIENTE a REQUIERE_CORRECCION
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in com.empresa.reembolsos.procesamiento.notificacion.NotificadorAuditoriaTest
+[INFO] Running com.empresa.reembolsos.procesamiento.notificacion.NotificadorEmpleadoTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.empresa.reembolsos.procesamiento.notificacion.NotificadorEmpleadoTest
+[INFO] Running com.empresa.reembolsos.procesamiento.validacion.ValidadorDocumentosSoporteTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.empresa.reembolsos.procesamiento.validacion.ValidadorDocumentosSoporteTest
+[INFO] Running com.empresa.reembolsos.procesamiento.validacion.ValidadorMontoMaximoTest
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 s -- in com.empresa.reembolsos.procesamiento.validacion.ValidadorMontoMaximoTest
+[INFO] Running com.empresa.reembolsos.procesamiento.validacion.CadenaValidadoresTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in com.empresa.reembolsos.procesamiento.validacion.CadenaValidadoresTest
+[INFO] Running com.empresa.reembolsos.procesamiento.validacion.ValidadorDuplicadosTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in com.empresa.reembolsos.procesamiento.validacion.ValidadorDuplicadosTest
+[INFO] Running com.empresa.reembolsos.ReglasArquitectura
+2026-11-12T16:27:07.996Z  INFO 3366 --- [reembolsos-integrado] [           main] com.tngtech.archunit.core.PluginLoader   : Detected Java version 23.0.2
+[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.478 s <<< FAILURE! -- in com.empresa.reembolsos.ReglasArquitectura
+[ERROR] com.empresa.reembolsos.ReglasArquitectura.controladorSoloUsaServicio -- Time elapsed: 0.004 s <<< FAILURE!
+java.lang.AssertionError: 
+Architecture Violation [Priority: MEDIUM] - Rule 'classes that reside in a package '..adaptadores.rest..' should only access classes that reside in any package ['..aplicacion..', '..dominio..', 'org.springframework.web..', 'org.springframework.http..', 'java..']' was violated (3 times):
+Constructor <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.<init>(com.empresa.reembolsos.aplicacion.SolicitudReembolsoService)> sets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:20)
+Method <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.cambiarEstado(java.lang.Long, com.empresa.reembolsos.dominio.EstadoSolicitud)> gets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:29)
+Method <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.crear(com.empresa.reembolsos.dominio.SolicitudReembolso)> gets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:24)
+	at com.tngtech.archunit.lang.ArchRule$Assertions.assertNoViolation(ArchRule.java:94)
+	at com.tngtech.archunit.lang.ArchRule$Assertions.check(ArchRule.java:86)
+	at com.tngtech.archunit.lang.ArchRule$Factory$SimpleArchRule.check(ArchRule.java:165)
+	at com.tngtech.archunit.lang.syntax.ObjectsShouldInternal.check(ObjectsShouldInternal.java:81)
+	at com.tngtech.archunit.junit.internal.ArchUnitTestDescriptor$ArchUnitRuleDescriptor.execute(ArchUnitTestDescriptor.java:167)
+	at com.tngtech.archunit.junit.internal.ArchUnitTestDescriptor$ArchUnitRuleDescriptor.execute(ArchUnitTestDescriptor.java:150)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   ReglasArquitectura.controladorSoloUsaServicio Architecture Violation [Priority: MEDIUM] - Rule 'classes that reside in a package '..adaptadores.rest..' should only access classes that reside in any package ['..aplicacion..', '..dominio..', 'org.springframework.web..', 'org.springframework.http..', 'java..']' was violated (3 times):
+Constructor <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.<init>(com.empresa.reembolsos.aplicacion.SolicitudReembolsoService)> sets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:20)
+Method <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.cambiarEstado(java.lang.Long, com.empresa.reembolsos.dominio.EstadoSolicitud)> gets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:29)
+Method <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.crear(com.empresa.reembolsos.dominio.SolicitudReembolso)> gets field <com.empresa.reembolsos.adaptadores.rest.SolicitudReembolsoController.servicio> in (SolicitudReembolsoController.java:24)
+[INFO] 
+[ERROR] Tests run: 68, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.247 s
+[INFO] Finished at: 2026-11-12T16:27:09Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project reembolsos-integrado: There are test failures.
+[ERROR] 
+[ERROR] See /tmp/tmp.BAQguhiTPg/impacto/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
