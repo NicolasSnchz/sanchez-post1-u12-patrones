@@ -1,0 +1,16 @@
+52ab614 Revert "test: violacion de arquitectura intencional"
+5f9e92b ci: medir el estado final del revert tambien con JDK 23
+bfde56f test: permitir en la Regla 2 que el controlador use su propio paquete
+33e7882 test: violacion de arquitectura intencional
+f34a788 ci: flujo temporal para medir la evidencia del proyecto
+64ef5ba docs: documentar analisis de impacto y patrones descartados por sobreingenieria
+8bc987e ci: agregar workflow de GitHub Actions para validacion arquitectonica
+cb24d30 test: agregar dependencia ArchUnit y las 4 reglas de arquitectura en ReglasArquitectura
+57f2c9d docs: agregar ADR-001 con la decision arquitectonica de persistencia y notificacion
+6f76cbf docs: documentar la arquitectura y las decisiones de diseno 1 y 2 de la Parte 1
+95517bc feat: ensamblar SolicitudReembolsoService y el controlador REST
+1b700af feat: implementar notificacion a interesados ante cambios de estado
+6e85dd4 feat: implementar estrategias de calculo por categoria de gasto
+740df5f feat: implementar cadena de validadores para las solicitudes de reembolso
+28480cf docs: analizar requisitos y proponer diseno de patrones antes de implementar
+639a92c Initial commit

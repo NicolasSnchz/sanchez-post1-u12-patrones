@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SolicitudReembolso.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">reembolsos-integrado</a> &gt; <a href="index.source.html" class="el_package">com.empresa.reembolsos.dominio</a> &gt; <span class="el_source">SolicitudReembolso.java</span></div><h1>SolicitudReembolso.java</h1><pre class="source lang-java linenums">package com.empresa.reembolsos.dominio;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+<span class="nc" id="L6">public class SolicitudReembolso {</span>
+    private Long id;
+    private String empleadoId;
+    private CategoriaGasto categoria;
+    private BigDecimal montoSolicitado;
+    private BigDecimal montoAprobado;
+    private LocalDate fechaGasto;
+    private int diasViaje;
+    private boolean documentosSoporte;
+    private EstadoSolicitud estado;
+
+<span class="nc" id="L17">    public Long getId() { return id; }</span>
+<span class="nc" id="L18">    public void setId(Long id) { this.id = id; }</span>
+
+<span class="nc" id="L20">    public String getEmpleadoId() { return empleadoId; }</span>
+<span class="nc" id="L21">    public void setEmpleadoId(String empleadoId) { this.empleadoId = empleadoId; }</span>
+
+<span class="nc" id="L23">    public CategoriaGasto getCategoria() { return categoria; }</span>
+<span class="nc" id="L24">    public void setCategoria(CategoriaGasto categoria) { this.categoria = categoria; }</span>
+
+<span class="nc" id="L26">    public BigDecimal getMontoSolicitado() { return montoSolicitado; }</span>
+<span class="nc" id="L27">    public void setMontoSolicitado(BigDecimal montoSolicitado) { this.montoSolicitado = montoSolicitado; }</span>
+
+<span class="nc" id="L29">    public BigDecimal getMontoAprobado() { return montoAprobado; }</span>
+<span class="nc" id="L30">    public void setMontoAprobado(BigDecimal montoAprobado) { this.montoAprobado = montoAprobado; }</span>
+
+<span class="nc" id="L32">    public LocalDate getFechaGasto() { return fechaGasto; }</span>
+<span class="nc" id="L33">    public void setFechaGasto(LocalDate fechaGasto) { this.fechaGasto = fechaGasto; }</span>
+
+<span class="nc" id="L35">    public int getDiasViaje() { return diasViaje; }</span>
+<span class="nc" id="L36">    public void setDiasViaje(int diasViaje) { this.diasViaje = diasViaje; }</span>
+
+<span class="nc" id="L38">    public boolean isDocumentosSoporte() { return documentosSoporte; }</span>
+<span class="nc" id="L39">    public void setDocumentosSoporte(boolean documentosSoporte) { this.documentosSoporte = documentosSoporte; }</span>
+
+<span class="nc" id="L41">    public EstadoSolicitud getEstado() { return estado; }</span>
+<span class="nc" id="L42">    public void setEstado(EstadoSolicitud estado) { this.estado = estado; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

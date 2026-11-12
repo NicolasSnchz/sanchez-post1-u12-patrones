@@ -1,0 +1,49 @@
+## Crear una solicitud de cada categoria
+
+$ curl -X POST /api/solicitudes -d '{"empleadoId":"E-201","categoria":"VIAJE","montoSolicitado":400000,"fechaGasto":"2026-10-15","diasViaje":3,"documentosSoporte":true}'
+{"id":1,"empleadoId":"E-201","categoria":"VIAJE","montoSolicitado":400000,"montoAprobado":400000,"fechaGasto":"2026-10-15","diasViaje":3,"documentosSoporte":true,"estado":"PENDIENTE"}
+HTTP 200
+
+$ curl -X POST /api/solicitudes -d '{"empleadoId":"E-202","categoria":"REPRESENTACION","montoSolicitado":1200000,"fechaGasto":"2026-10-15","documentosSoporte":true}'
+{"id":2,"empleadoId":"E-202","categoria":"REPRESENTACION","montoSolicitado":1200000,"montoAprobado":1200000,"fechaGasto":"2026-10-15","diasViaje":0,"documentosSoporte":true,"estado":"PENDIENTE"}
+HTTP 200
+
+$ curl -X POST /api/solicitudes -d '{"empleadoId":"E-203","categoria":"CAPACITACION","montoSolicitado":1000000,"fechaGasto":"2026-10-15","documentosSoporte":true}'
+{"id":3,"empleadoId":"E-203","categoria":"CAPACITACION","montoSolicitado":1000000,"montoAprobado":800000.0,"fechaGasto":"2026-10-15","diasViaje":0,"documentosSoporte":true,"estado":"PENDIENTE"}
+HTTP 200
+
+## Rechazos de la cadena de validacion
+
+$ curl -X POST /api/solicitudes -d '{"empleadoId":"E-204","categoria":"VIAJE","montoSolicitado":100000,"fechaGasto":"2026-10-15","diasViaje":1,"documentosSoporte":false}'
+{"type":"about:blank","title":"Bad Request","status":400,"detail":"Faltan documentos soporte","instance":"/api/solicitudes"}
+HTTP 400
+
+$ curl -X POST /api/solicitudes -d '{"empleadoId":"E-205","categoria":"REPRESENTACION","montoSolicitado":2500000,"fechaGasto":"2026-10-15","documentosSoporte":true}'
+{"type":"about:blank","title":"Bad Request","status":400,"detail":"Monto excede el tope de la categoria REPRESENTACION","instance":"/api/solicitudes"}
+HTTP 400
+
+$ curl -X POST /api/solicitudes -d '{"empleadoId":"E-202","categoria":"REPRESENTACION","montoSolicitado":300000,"fechaGasto":"2026-10-20","documentosSoporte":true}'
+{"type":"about:blank","title":"Bad Request","status":400,"detail":"Ya existe una solicitud pendiente de la misma categoria en el periodo","instance":"/api/solicitudes"}
+HTTP 400
+
+## Cambios de estado
+
+$ curl -X PUT /api/solicitudes/3/estado -d '"APROBADA"'
+{"id":3,"empleadoId":"E-203","categoria":"CAPACITACION","montoSolicitado":1000000.00,"montoAprobado":800000.00,"fechaGasto":"2026-10-15","diasViaje":0,"documentosSoporte":true,"estado":"APROBADA"}
+HTTP 200
+
+$ curl -X PUT /api/solicitudes/1/estado -d '"RECHAZADA"'
+{"id":1,"empleadoId":"E-201","categoria":"VIAJE","montoSolicitado":400000.00,"montoAprobado":400000.00,"fechaGasto":"2026-10-15","diasViaje":3,"documentosSoporte":true,"estado":"RECHAZADA"}
+HTTP 200
+
+$ curl -X PUT /api/solicitudes/2/estado -d '"REQUIERE_CORRECCION"'
+{"id":2,"empleadoId":"E-202","categoria":"REPRESENTACION","montoSolicitado":1200000.00,"montoAprobado":1200000.00,"fechaGasto":"2026-10-15","diasViaje":0,"documentosSoporte":true,"estado":"REQUIERE_CORRECCION"}
+HTTP 200
+
+$ curl -X PUT /api/solicitudes/2/estado -d '"REQUIERE_CORRECCION"'
+{"id":2,"empleadoId":"E-202","categoria":"REPRESENTACION","montoSolicitado":1200000.00,"montoAprobado":1200000.00,"fechaGasto":"2026-10-15","diasViaje":0,"documentosSoporte":true,"estado":"REQUIERE_CORRECCION"}
+HTTP 200
+
+$ curl -X PUT /api/solicitudes/999/estado -d '"APROBADA"'
+{"type":"about:blank","title":"Not Found","status":404,"detail":"Solicitud no encontrada: 999","instance":"/api/solicitudes/999/estado"}
+HTTP 404
