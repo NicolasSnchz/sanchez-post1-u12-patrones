@@ -23,13 +23,14 @@ public class ReglasArquitectura {
             "..infraestructura..", "..adaptadores..",
             "org.springframework.data..", "jakarta.persistence..");
 
-    // Regla 2: el controlador solo accede al servicio de aplicacion y al dominio
+    // Regla 2: el controlador solo accede al servicio de aplicacion y al dominio (y a su propio
+    // paquete: leer su campo servicio cuenta como un acceso a SolicitudReembolsoController)
     @ArchTest
     static final ArchRule controladorSoloUsaServicio = classes()
         .that().resideInAPackage("..adaptadores.rest..")
         .should().onlyAccessClassesThat()
         .resideInAnyPackage(
-            "..aplicacion..", "..dominio..",
+            "..adaptadores.rest..", "..aplicacion..", "..dominio..",
             "org.springframework.web..", "org.springframework.http..", "java..");
 
     // Regla 3: las calculadoras implementan CalculadoraReembolso (SelectorCalculadora vive en el
