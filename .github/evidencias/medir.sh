@@ -94,6 +94,8 @@ fi
 if [ -n "$REVERT" ]; then
     worktree revert "$REVERT"
     correr p2-revert "$TRABAJO/revert" "$J17" verify
+    correr p2-revert-jdk23 "$TRABAJO/revert" "$J23" verify
+    correr p2-revert-reglas "$TRABAJO/revert" "$J17" test -Dtest=ReglasArquitectura
 fi
 
 for f in "$SALIDA"/logs/*.exit; do echo "$(basename "$f" .exit) -> $(cat "$f")"; done > "$SALIDA/resumen.txt"
